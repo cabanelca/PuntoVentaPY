@@ -31,7 +31,25 @@ def menuVendedores():
     print ("4-  SALIR ")
     opciónVendedor = input(" Elije una Opción valida: ")
 
+def menuAMEUsuarios():
+    borrarPantalla()
+    print ("1- MODIFICAR USUARIO ")
+    print ("2- AGREGAR USUARIO ")
+    print ("3- ELIMINAR USUARIO ")
+
+    opcionAMEUsuario = input("Elija una opción correcta: ")
+
+def menuModificarStock():
+    borrarPantalla()
+    print (" MODIFICAR STOCK ")
+    print (" MODIFICAR PRECIO ")
+    print (" AGREGAR ARTICULO ")
+
+    opcionModificarStock= input(" Elija una opción valida: ")
+
 #codigo principal (main)
 #menuLogin()
 #menuAdministrador()
-menuVendedores()
+#menuVendedores()
+#menuAMEUsuarios()
+#menuModificarStock()
