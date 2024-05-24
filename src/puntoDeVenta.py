@@ -41,9 +41,9 @@ def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
 
 def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, consultarlo y agregar un articulo
     borrarPantalla()
-    print (" MODIFICAR STOCK ")
-    print (" MODIFICAR PRECIO ")
-    print (" AGREGAR ARTICULO ")
+    print ("1- MODIFICAR STOCK ")
+    print ("2- MODIFICAR PRECIO ")
+    print ("3- AGREGAR ARTICULO ")
 
     opcionModificarStock= input(" Elija una opción valida: ")
 
