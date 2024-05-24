@@ -1,12 +1,12 @@
 import os
 
-def borrarPantalla(): #Definimos la función estableciendo el nombre que queramos
+def borrarPantalla(): #borra pantalla de consola
     if os.name == "posix":
         os.system ("clear")
     elif os.name == "ce" or os.name == "nt" or os.name == "dos":
         os.system ("cls")
 
-def menuLogin():
+def menuLogin():# nos muestra el login
     borrarPantalla()
     print("Bienvenido")
     print("Punto de Venta")
@@ -14,7 +14,7 @@ def menuLogin():
     usuario=  input("Usuario: ")
 
     password= input("Contraseña: ")
-def menuAdministrador():
+def menuAdministrador():# nos muestra el menu de administrador 
     borrarPantalla()
     print ("Punto de Venta")
     print ("Modo Administrador")
@@ -22,16 +22,16 @@ def menuAdministrador():
     print ("1- Administrar Usuarios")
     print ("2- Adiministrar Stock")
     opcionAdministrador = input("Elige una opción valida: ")
-def menuVendedores():
+def menuVendedores():# nos muestra el menu de los vendedores
     borrarPantalla()
     print ("ELIJA UNA OPCIÓN DEL MENU ")
     print ("1-  VENDER ")
-    print ("2- Buscar Producto")
-    print ("3- Buscar Productos en falta")
+    print ("2- BUSCAR PRODUCTO")
+    print ("3- BUSCAR PRODUCTOS EN FALTA")
     print ("4-  SALIR ")
     opciónVendedor = input(" Elije una Opción valida: ")
 
-def menuAMEUsuarios():
+def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
     borrarPantalla()
     print ("1- MODIFICAR USUARIO ")
     print ("2- AGREGAR USUARIO ")
@@ -39,7 +39,7 @@ def menuAMEUsuarios():
 
     opcionAMEUsuario = input("Elija una opción correcta: ")
 
-def menuModificarStock():
+def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, consultarlo y agregar un articulo
     borrarPantalla()
     print (" MODIFICAR STOCK ")
     print (" MODIFICAR PRECIO ")
