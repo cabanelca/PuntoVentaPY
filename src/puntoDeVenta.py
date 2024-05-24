@@ -21,9 +21,17 @@ def menuAdministrador():
     print ("\n")
     print ("1- Administrar Usuarios")
     print ("2- Adiministrar Stock")
-    opcion = input("Elige una opción valida: ")
+    opcionAdministrador = input("Elige una opción valida: ")
+def menuVendedores():
+    borrarPantalla()
+    print ("ELIJA UNA OPCIÓN DEL MENU ")
+    print ("1-  VENDER ")
+    print ("2- Buscar Producto")
+    print ("3- Buscar Productos en falta")
+    print ("4-  SALIR ")
+    opciónVendedor = input(" Elije una Opción valida: ")
 
 #codigo principal (main)
 #menuLogin()
 #menuAdministrador()
-
+menuVendedores()
