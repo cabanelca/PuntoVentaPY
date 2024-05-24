@@ -6,16 +6,24 @@ def borrarPantalla(): #Definimos la función estableciendo el nombre que queramo
     elif os.name == "ce" or os.name == "nt" or os.name == "dos":
         os.system ("cls")
 
-borrarPantalla()
-
-
 def menuLogin():
+    borrarPantalla()
     print("Bienvenido")
     print("Punto de Venta")
     print("\n")
     usuario=  input("Usuario: ")
 
     password= input("Contraseña: ")
+def menuAdministrador():
+    borrarPantalla()
+    print ("Punto de Venta")
+    print ("Modo Administrador")
+    print ("\n")
+    print ("1- Administrar Usuarios")
+    print ("2- Adiministrar Stock")
+    opcion = input("Elige una opción valida: ")
 
-menuLogin()
+#codigo principal (main)
+#menuLogin()
+#menuAdministrador()
 
