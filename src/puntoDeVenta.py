@@ -14,6 +14,8 @@ def menuLogin():# nos muestra el login
     usuario=  input("Usuario: ")
 
     password= input("Contraseña: ")
+    return len(password)
+
 def menuAdministrador():# nos muestra el menu de administrador 
     borrarPantalla()
     print ("Punto de Venta")
@@ -47,8 +49,21 @@ def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, c
 
     opcionModificarStock= input(" Elija una opción valida: ")
 
+
+
+
 #codigo principal (main)
-#menuLogin()
+
+longPass= menuLogin()
+
+
+if longPass == 6:
+    menuVendedores()
+elif longPass == 8:
+    menuAdministrador()
+else :
+    print (" Acceso Denegado")
+
 #menuAdministrador()
 #menuVendedores()
 #menuAMEUsuarios()
