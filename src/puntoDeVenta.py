@@ -53,16 +53,19 @@ def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, c
 
 
 #codigo principal (main)
+longPass=0
+while longPass != 6 and longPass!= 8:
+    longPass= menuLogin()
 
-longPass= menuLogin()
 
+    if longPass == 6:
+        menuVendedores()
+    elif longPass == 8:
+        menuAdministrador()
+    else :
+        print (" Acceso Denegado ")
+        input ()
 
-if longPass == 6:
-    menuVendedores()
-elif longPass == 8:
-    menuAdministrador()
-else :
-    print (" Acceso Denegado")
 
 #menuAdministrador()
 #menuVendedores()
