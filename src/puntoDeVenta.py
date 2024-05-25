@@ -24,6 +24,8 @@ def menuAdministrador():# nos muestra el menu de administrador
     print ("1- Administrar Usuarios")
     print ("2- Adiministrar Stock")
     opcionAdministrador = input("Elige una opción valida: ")
+    return (int(opcionAdministrador))
+
 def menuVendedores():# nos muestra el menu de los vendedores
     borrarPantalla()
     print ("ELIJA UNA OPCIÓN DEL MENU ")
@@ -61,12 +63,23 @@ while longPass != 6 and longPass!= 8:
     if longPass == 6:
         menuVendedores()
     elif longPass == 8:
-        menuAdministrador()
+        modoAdmin=  menuAdministrador()
+        if modoAdmin == 1:
+            menuAMEUsuarios()
+        elif modoAdmin == 2:
+            menuModificarStock()
+        else:
+            print ("Elige una opción válida")
+            input()           
+    
     else :
         print (" Acceso Denegado ")
         input ()
 
 
+#while modoAdmin !=1 and modoAdmin !=2:
+        
+     
 #menuAdministrador()
 #menuVendedores()
 #menuAMEUsuarios()
