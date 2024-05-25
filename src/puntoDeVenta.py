@@ -63,7 +63,8 @@ while longPass != 6 and longPass!= 8:
     if longPass == 6:
         menuVendedores()
     elif longPass == 8:
-        modoAdmin=  menuAdministrador()
+        modoAdmin=menuAdministrador()
+        #while modoAdmin !=1 and modoAdmin !=2:
         if modoAdmin == 1:
             menuAMEUsuarios()
         elif modoAdmin == 2:
@@ -77,7 +78,7 @@ while longPass != 6 and longPass!= 8:
         input ()
 
 
-#while modoAdmin !=1 and modoAdmin !=2:
+
         
      
 #menuAdministrador()
