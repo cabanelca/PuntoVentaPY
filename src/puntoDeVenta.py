@@ -1,4 +1,22 @@
 import os
+from io import open
+
+
+def crear_archivo(nombre):
+    archivo= open(nombre,"w")
+    archivo.close()
+def sobreescribir_archivo(contenido, nombre_archivo):
+    archivo=open(nombre_archivo,"w")
+    
+    archivo.write(contenido)
+   
+    archivo.close()
+
+def leer_archivo(nombre):
+    archivo= open(nombre, "r")
+    contenido = archivo.read()
+    archivo.close()
+    return contenido
 
 def borrarPantalla(): #borra pantalla de consola
     if os.name == "posix":
@@ -8,22 +26,22 @@ def borrarPantalla(): #borra pantalla de consola
 
 def menuLogin():# nos muestra el login
     borrarPantalla()
-    print("Bienvenido")
-    print("Punto de Venta")
+    print("BINVENIDO")
+    print("PUNTO DE VENTA")
     print("\n")
-    usuario=  input("Usuario: ")
+    usuario=  input("USUARIO: ")
 
-    password= input("Contraseña: ")
+    password= input("CONTRASEÑA: ")
     return len(password)
 
 def menuAdministrador():# nos muestra el menu de administrador 
     borrarPantalla()
-    print ("Punto de Venta")
-    print ("Modo Administrador")
+    print ("PUNTO DE VENTA")
+    print ("MODO ADMINISTRADOR")
     print ("\n")
-    print ("1- Administrar Usuarios")
-    print ("2- Adiministrar Stock")
-    opcionAdministrador = input("Elige una opción valida: ")
+    print ("1- ADMINISTRAR USUARIOS")
+    print ("2- ADMINISTRAR VENDEDOR")
+    opcionAdministrador = input("ELIGE UNA OPCION VALIDA")
     return (int(opcionAdministrador))
 
 def menuVendedores():# nos muestra el menu de los vendedores
@@ -33,7 +51,7 @@ def menuVendedores():# nos muestra el menu de los vendedores
     print ("2- BUSCAR PRODUCTO")
     print ("3- BUSCAR PRODUCTOS EN FALTA")
     print ("4-  SALIR ")
-    opcionVendedor = input(" Elije una Opción valida: ")
+    opcionVendedor = input("ELIJA UNA OPCION VALIDA")
     return (int(opcionVendedor))
 def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
     borrarPantalla()
@@ -41,21 +59,21 @@ def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
     print ("2- AGREGAR USUARIO ")
     print ("3- ELIMINAR USUARIO ")
 
-    opcionAMEUsuario = input("Elija una opción correcta: ")
+    opcionAMEUsuario = input("ELIJA UNA OPCION VALIDA")
     return (int(opcionAMEUsuario))
 
 def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, consultarlo y agregar un articulo
     borrarPantalla()
-    print ("1- MODIFICAR ARTICULO")
+    print ("1- MODIFICAR PRODUCTO")
     #print ("2- MODIFICAR PRECIO ")
-    print ("2- AGREGAR ARTICULO ")
+    print ("2- AGREGAR PRODUCTO")
 
-    opcionModificarStock= input(" Elija una opción valida: ")
+    opcionModificarStock= input(" ELIJA UNA OPCION VALIDA ")
 
 def agregarUsuario():
     borrarPantalla()
     print  ("AGREGAR NUEVO USUARIO") 
-    usuario= input("Nombre del nuevo usuario: ")
+    usuario= input("NOMDE DEL NUEVO USUARIO: ")
     password="12345678"# aca iria generador de contraseña.
     #agregar a archivo correspondiente de usuario y de contraseña.
     print ("EL NUEVO USUARIO ES:" + usuario)
@@ -75,6 +93,36 @@ def modificar_articulo():
 def agregar_articulo():
     borrarPantalla()
     print("INGRESE EL ARTICULO A AGREGAR")
+def menu_ventas():
+    productos=leer_archivo("productos.txt")
+    while True:
+        borrarPantalla()
+        print("VENTAS DE PRODUCTOS")
+        pro_vendido= input("INGRESE EL PRODUCTO A AGREGAR: ")
+        cantidad=input("INGRESE LA CANTIDAD QUE VA A COMPRAR: ")
+        fin=input("DESEAS SEGUIR COMPRANDO: ")
+        productos= registrar_ventas(productos,pro_vendido,cantidad)
+        if fin == "no":
+            break
+    sobreescribir_archivo(productos,"productos.txt")
+
+def registrar_ventas(productos,pro_vendido,cantidad):
+    subtotal=0
+    pos=0
+    lista_productos=productos.split("#")
+    for prod in lista_productos:
+        registro_producto = prod.split(",")
+        if pro_vendido == registro_producto[1]:
+            resultado_resta=(int(registro_producto[3])- int(cantidad))
+            registro_producto[3]=str(resultado_resta)
+            subtotal= (int(registro_producto[2])*int(cantidad))+subtotal
+            prod=(",").join(registro_producto)
+            lista_productos[pos]=prod
+        else:
+            pos =pos +1
+    productos=("#").join(lista_productos)
+    return productos
+
 
 
 
@@ -89,8 +137,8 @@ while longPass != 6 and longPass!= 8:
         while modoVendedor != 1 and modoVendedor !=2 and modoVendedor != 3 and modoVendedor != 4:
             modoVendedor= menuVendedores()
 
-        #    if modoVendedor == 1:
-        
+            if modoVendedor == 1:
+                menu_ventas()
          #   elif modoVendedor ==2:
 
            # elif modoVendedor ==3:
@@ -121,12 +169,12 @@ while longPass != 6 and longPass!= 8:
             elif modoAdmin == 2:
                 menuModificarStock()
             else:
-                print ("Quieres modificar usuario elige 1 y si quieres modificar stock elige 2")
+                print ("QUIERES MODIFICAR USUARIO ELIGE 1 Y SI QUIERES MODIFICAR STOCK ELIGE 2")
                 input()       
              
         
     else :
-        print (" Acceso Denegado ")
+        print (" ACCESO DENEGADO")
         input ()
 
 
