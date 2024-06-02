@@ -1,7 +1,8 @@
 caracter="abcdefghijklmnopqrstuvwxyz"
 
 listB= list(caracter)
-listR=listB.reverse()
+listR= list(caracter)
+listR.reverse()
 
 clave=""
 login=input("LOGIN: ")

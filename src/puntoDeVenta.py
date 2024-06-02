@@ -49,9 +49,9 @@ def menuVendedores():# nos muestra el menu de los vendedores
     print ("ELIJA UNA OPCIÓN DEL MENU ")
     print ("1-  VENDER ")
     print ("2- BUSCAR PRODUCTO")
-    print ("3- BUSCAR PRODUCTOS EN FALTA")
+    print ("3- LISTA DE PRODUCTOS EN FALTA")
     print ("4-  SALIR ")
-    opcionVendedor = input("ELIJA UNA OPCION VALIDA")
+    opcionVendedor = input("ELIJA UNA OPCION VALIDA: ")
     return (int(opcionVendedor))
 def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
     borrarPantalla()
@@ -95,17 +95,19 @@ def agregar_articulo():
     print("INGRESE EL ARTICULO A AGREGAR")
 def menu_ventas():
     productos=leer_archivo("productos.txt")
+    totalventa=0
     while True:
         borrarPantalla()
         print("VENTAS DE PRODUCTOS")
         pro_vendido= input("INGRESE EL PRODUCTO A AGREGAR: ")
         cantidad=input("INGRESE LA CANTIDAD QUE VA A COMPRAR: ")
-        fin=input("DESEAS SEGUIR COMPRANDO: ")
         productos= registrar_ventas(productos,pro_vendido,cantidad)
+        fin=input("DESEAS SEGUIR COMPRANDO: ")
         if fin == "no":
             break
     sobreescribir_archivo(productos,"productos.txt")
-
+   
+    print(" TU SALDO A PAGAR ES= "+ str(totalventa))
 def registrar_ventas(productos,pro_vendido,cantidad):
     subtotal=0
     pos=0
@@ -113,14 +115,21 @@ def registrar_ventas(productos,pro_vendido,cantidad):
     for prod in lista_productos:
         registro_producto = prod.split(",")
         if pro_vendido == registro_producto[1]:
-            resultado_resta=(int(registro_producto[3])- int(cantidad))
-            registro_producto[3]=str(resultado_resta)
-            subtotal= (int(registro_producto[2])*int(cantidad))+subtotal
-            prod=(",").join(registro_producto)
-            lista_productos[pos]=prod
+            if int(cantidad) > int(registro_producto[3]):
+                print ("NO TIENES SUFICIENTE STOCK DEL PRODUCTO")
+            else:
+                resultado_resta=(int(registro_producto[3])- int(cantidad))
+                registro_producto[3]=str(resultado_resta)
+                subtotal= (int(registro_producto[2])*int(cantidad))+subtotal
+                prod=(",").join(registro_producto)
+                lista_productos[pos]=prod
         else:
             pos =pos +1
+    if len(lista_productos) == pos:
+        print (" EL PRODUCTO NO SE ENCUENTRA EN STOCK")
+
     productos=("#").join(lista_productos)
+   
     return productos
 
 
@@ -134,7 +143,7 @@ while longPass != 6 and longPass!= 8:
 
     if longPass == 6:
         modoVendedor=0
-        while modoVendedor != 1 and modoVendedor !=2 and modoVendedor != 3 and modoVendedor != 4:
+        while modoVendedor != 4:
             modoVendedor= menuVendedores()
 
             if modoVendedor == 1:
