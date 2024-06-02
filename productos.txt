@@ -1,1 +1,1 @@
-1,galleta,2000,14#2,cocacola2l,1500,960#3,pepsi2l,1300,31#4,fanta2l,1500,83
+1,galleta,2000,10#2,cocacola2l,1500,960#3,pepsi2l,1300,27#4,fanta2l,1500,63

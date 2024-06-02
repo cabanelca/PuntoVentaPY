@@ -101,13 +101,17 @@ def menu_ventas():
         print("VENTAS DE PRODUCTOS")
         pro_vendido= input("INGRESE EL PRODUCTO A AGREGAR: ")
         cantidad=input("INGRESE LA CANTIDAD QUE VA A COMPRAR: ")
-        productos= registrar_ventas(productos,pro_vendido,cantidad)
+        registro_venta= registrar_ventas(productos,pro_vendido,cantidad)
+        productos=registro_venta[0]
+        totalventa=registro_venta[1]+totalventa
         fin=input("DESEAS SEGUIR COMPRANDO: ")
         if fin == "no":
             break
+    
     sobreescribir_archivo(productos,"productos.txt")
-   
     print(" TU SALDO A PAGAR ES= "+ str(totalventa))
+    input()
+   
 def registrar_ventas(productos,pro_vendido,cantidad):
     subtotal=0
     pos=0
@@ -130,7 +134,7 @@ def registrar_ventas(productos,pro_vendido,cantidad):
 
     productos=("#").join(lista_productos)
    
-    return productos
+    return productos, subtotal
 
 
 
