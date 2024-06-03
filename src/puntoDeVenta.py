@@ -1,15 +1,44 @@
 import os
+import random
 from io import open
 
-
+def generador_contrasena(longitud):
+    minus="abcdefghijklmnopqrstuvwxyz"
+    muestra=random.sample(minus,longitud)
+    password="".join(muestra)
+    return password
+   
+def cifrado(cadena):
+    caracter="abcdefghijklmnopqrstuvwxyz"
+    listB= list(caracter)
+    listR= list(caracter)
+    listR.reverse()
+    clave=""
+    listlogin=list(cadena)
+    i=0
+    while i < len(cadena):
+        caracter=listlogin[i]
+        j= listB.index(caracter)
+        clave= clave+ listR[j]
+        i=i+1
+    return(clave)
 def crear_archivo(nombre):
     archivo= open(nombre,"w")
     archivo.close()
-def sobreescribir_archivo(contenido, nombre_archivo):
+
+def sobrescribir_archivo(contenido, nombre_archivo):
     archivo=open(nombre_archivo,"w")
-    
     archivo.write(contenido)
-   
+    archivo.close()
+
+def agregar_archivo(contenido, nombre_archivo):
+    contenido_anterior=leer_archivo(nombre_archivo)
+    
+    if len(contenido_anterior)>0:
+        contenido= "#"+ contenido
+    archivo=open(nombre_archivo,"a")
+
+    archivo.write(contenido)
     archivo.close()
 
 def leer_archivo(nombre):
@@ -41,7 +70,7 @@ def menuAdministrador():# nos muestra el menu de administrador
     print ("\n")
     print ("1- ADMINISTRAR USUARIOS")
     print ("2- ADMINISTRAR VENDEDOR")
-    opcionAdministrador = input("ELIGE UNA OPCION VALIDA")
+    opcionAdministrador = input("ELIGE UNA OPCION VALIDA: ")
     return (int(opcionAdministrador))
 
 def menuVendedores():# nos muestra el menu de los vendedores
@@ -55,11 +84,11 @@ def menuVendedores():# nos muestra el menu de los vendedores
     return (int(opcionVendedor))
 def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
     borrarPantalla()
-    print ("1- MODIFICAR USUARIO ")
-    print ("2- AGREGAR USUARIO ")
+    print ("1- AGREGAR USUARIO ")
+    print ("2- MODIFICAR USUARIO ")
     print ("3- ELIMINAR USUARIO ")
 
-    opcionAMEUsuario = input("ELIJA UNA OPCION VALIDA")
+    opcionAMEUsuario = input("ELIJA UNA OPCION VALIDA: ")
     return (int(opcionAMEUsuario))
 
 def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, consultarlo y agregar un articulo
@@ -68,20 +97,22 @@ def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, c
     #print ("2- MODIFICAR PRECIO ")
     print ("2- AGREGAR PRODUCTO")
 
-    opcionModificarStock= input(" ELIJA UNA OPCION VALIDA ")
+    opcionModificarStock= input(" ELIJA UNA OPCION VALIDA: ")
 
 def agregarUsuario():
     borrarPantalla()
     print  ("AGREGAR NUEVO USUARIO") 
-    usuario= input("NOMDE DEL NUEVO USUARIO: ")
-    password="12345678"# aca iria generador de contraseña.
-    #agregar a archivo correspondiente de usuario y de contraseña.
-    print ("EL NUEVO USUARIO ES:" + usuario)
-    print ("SU CONTRASEÑA ES:" + password)
-
+    usuario= input("NOMBRE DEL NUEVO USUARIO: ")
+    password=generador_contrasena(6)
+    print ("EL NUEVO USUARIO ES: " + usuario)
+    print ("SU CONTRASEÑA ES: " + password)
+    contrasena_cifrada= cifrado(password)
+    agregar_archivo(usuario, "usuario.txt")
+    agregar_archivo(contrasena_cifrada, "password.txt")
+   
 def modificarUsuario():
     borrarPantalla()
-    print( "INGRESE EL USUARIO QUE DESEA MODIFICAR")
+    print( "INGRESE EL USUARIO QUE DESEA MODIFICAR: ")
 
 
 def eliminarUsuario():
@@ -89,10 +120,10 @@ def eliminarUsuario():
     print (" ELIJA EL USUARIO A ELIMINAR: ")
 def modificar_articulo():
     borrarPantalla()
-    print("ELIJA EL ARTICULO A MODIFICAR")
+    print("ELIJA EL ARTICULO A MODIFICAR: ")
 def agregar_articulo():
     borrarPantalla()
-    print("INGRESE EL ARTICULO A AGREGAR")
+    print("INGRESE EL ARTICULO A AGREGAR: ")
 def menu_ventas():
     productos=leer_archivo("productos.txt")
     totalventa=0
@@ -108,7 +139,7 @@ def menu_ventas():
         if fin == "no":
             break
     
-    sobreescribir_archivo(productos,"productos.txt")
+    sobrescribir_archivo(productos,"productos.txt")
     print(" TU SALDO A PAGAR ES= "+ str(totalventa))
     input()
    
@@ -194,7 +225,4 @@ while longPass != 6 and longPass!= 8:
 
         
      
-#menuAdministrador()
-#menuVendedores()
-#menuAMEUsuarios()
-#menuModificarStock()
+
