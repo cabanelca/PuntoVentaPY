@@ -2,6 +2,7 @@ import os
 import random
 from io import open
 
+
 def generador_contrasena(longitud):
     minus="abcdefghijklmnopqrstuvwxyz"
     muestra=random.sample(minus,longitud)
@@ -72,6 +73,7 @@ def menuAdministrador():# nos muestra el menu de administrador
     print ("\n")
     print ("1- ADMINISTRAR USUARIOS")
     print ("2- ADMINISTRAR VENDEDOR")
+    print ("3- SALIR DEL PROGRAMA")
     opcionAdministrador = input("ELIGE UNA OPCION VALIDA: ")
     return (int(opcionAdministrador))
 
@@ -89,6 +91,7 @@ def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
     print ("1- AGREGAR USUARIO ")
     print ("2- MODIFICAR USUARIO ")
     print ("3- ELIMINAR USUARIO ")
+    print ("4- QUIERES VOLVER AL MENU ANTERIOR ")
 
     opcionAMEUsuario = input("ELIJA UNA OPCION VALIDA: ")
     return (int(opcionAMEUsuario))
@@ -232,13 +235,13 @@ while longPass != 6 and longPass!= 8:
                # print("elige una opcion entre el 1 y el 4")
                 #input()
     elif longPass == 8:
-        modoAdmin=0
-        while modoAdmin !=1 and modoAdmin !=2:
+        
+        while True:
 
             modoAdmin=menuAdministrador()
             if modoAdmin == 1:
-                opcion_admin=0
-                while opcion_admin!=1 and opcion_admin !=2 and opcion_admin !=3:
+                
+                while True:
                     opcion_admin=menuAMEUsuarios()
                     if opcion_admin==1:
                         agregarUsuario()
@@ -246,11 +249,16 @@ while longPass != 6 and longPass!= 8:
                         menuModificarUsuario()
                     elif opcion_admin==3:
                         eliminarUsuario()
+                    elif opcion_admin==4:
+                        break
                     else : 
-                        "INGRESE UN VALOR CORRECTO"
+                       print( "INGRESE UN VALOR CORRECTO")
+                       input()
 
             elif modoAdmin == 2:
                 menuModificarStock()
+            elif modoAdmin ==3:
+                break
             else:
                 print ("QUIERES MODIFICAR USUARIO ELIGE 1 Y SI QUIERES MODIFICAR STOCK ELIGE 2")
                 input()       
