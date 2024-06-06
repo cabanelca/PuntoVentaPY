@@ -2,7 +2,26 @@ import os
 import random
 from io import open
 
-
+def validacion_login(usuario, clave):
+    usuario_txt=leer_archivo("usuario.txt")
+    password_txt=leer_archivo("password.txt")
+    lista_usuario=usuario_txt.split("#")
+    lista_clave=password_txt.split("#")
+    pos=0
+    clave_cifrada=cifrado(clave)
+    for usuario_exitente in lista_usuario:
+        if usuario_exitente==usuario:
+            if lista_clave[pos]==clave_cifrada:
+                print(" ACCESO")
+                input()
+                return True
+            else:
+                
+                return False
+        else:
+            pos = pos +1
+   
+    
 def generador_contrasena(longitud):
     minus="abcdefghijklmnopqrstuvwxyz"
     muestra=random.sample(minus,longitud)
@@ -64,8 +83,11 @@ def menuLogin():# nos muestra el login
     usuario=  input("USUARIO: ")
 
     password= input("CONTRASEÑA: ")
-    return len(password)
-
+    valor=validacion_login(usuario, password)
+    if valor == True:
+        return len(password)
+    else:
+        return 3
 def menuAdministrador():# nos muestra el menu de administrador 
     borrarPantalla()
     print ("PUNTO DE VENTA")
@@ -110,7 +132,9 @@ def agregarUsuario():
     usuario= input("NOMBRE DEL NUEVO USUARIO: ")
     password=generador_contrasena(6)
     print ("EL NUEVO USUARIO ES: " + usuario)
+    input()
     print ("SU CONTRASEÑA ES: " + password)
+    input()
     contrasena_cifrada= cifrado(password)
     agregar_archivo(usuario, "usuario.txt")
     agregar_archivo(contrasena_cifrada, "password.txt")
