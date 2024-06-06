@@ -149,7 +149,9 @@ def menuModificarUsuario():
     resultado=modificarUsuario(usuario,nuevo_usuario,contrasena_cifrada)
     if resultado==True:
         print ("TU NUEVO USUARIO ES: " + nuevo_usuario)
+        input()
         print ("TU CONTRASENA ES : " + password)
+        input()
     else:
         print("EL USUARIO NO FUE ENCONTRADO")
 def modificarUsuario(usuario_viejo, usuario_nuevo, password):
@@ -173,16 +175,35 @@ def modificarUsuario(usuario_viejo, usuario_nuevo, password):
             i=i+1
 
     return False
-   
-      
-    
-def eliminarUsuario():
+def menuEliminarUsuario():
     borrarPantalla()
-    usuario=print(input (" ELIJA EL USUARIO A ELIMINAR: "))
-    password= inhabilitada
-    sobrescribir_archivo(usuario, "usuario.txt")
-    sobrescribir_archivo(password, "password.txt")
-    print ("EL SIGUIENTE USUARIO ESTA INHABILITADO")
+    print("ESTAS POR ELIMINAR UN USUARIO")
+    usuario= input("INGRESA TU USUARIO A ELIMINAR: ")
+    resultado =eliminarUsuario(usuario)
+    if resultado==True:
+        print("TU USUARIO FUE ELIMINADO")
+        input()
+    else:
+        print ("EL USUARIO NO FUE ENCONTRADO")
+        input()
+    
+def eliminarUsuario(usuario):
+    borrarPantalla()
+    usuario_txt=leer_archivo("usuario.txt")
+    password_txt=leer_archivo("password.txt")
+    lista_usuario= usuario_txt.split("#")
+    lista_password=password_txt.split("#")
+    i=0
+    for us_existente in lista_usuario:
+        if us_existente==usuario:
+            lista_usuario[i]=usuario
+            lista_password[i]=generador_contrasena(3)
+            password_txt=("#").join(lista_password)
+            sobrescribir_archivo(password_txt,"password.txt")
+            return True
+        else:
+            i=i+1
+    return False
     
 def modificar_articulo():
     borrarPantalla()
@@ -232,10 +253,31 @@ def registrar_ventas(productos,pro_vendido,cantidad):
     productos=("#").join(lista_productos)
    
     return productos, subtotal
+def menu_buscar_productos():
+    borrarPantalla()
+    producto_buscado=input("INGRESE EL PRODUCTO QUE BUSCAS: ")
+    producto=buscar_producto(producto_buscado)
+   
 
+def buscar_producto(producto):
+    productos_txt=leer_archivo("productos.txt")
+    lista_productos=productos_txt.split("#")
+    pos=0
+    for prod in lista_productos:
+        registro_producto=prod.split(",")
+        if producto == registro_producto[1]:
+            print("TU PRODUCTO: "+ registro_producto[1])
+            input()
 
-
-
+            print ("SU PRECIO ES: " + registro_producto[2])
+            input()
+            print("Y TE QUEDA EN STOCK: " + registro_producto[3])
+            input()
+        else:
+            pos=pos+1
+    if pos==len(lista_productos):
+        print("TU PRODUCTO NO ESTA EN NUESTRO LOCAL")
+        input()
 #codigo principal (main)
 longPass=0
 while longPass != 6 and longPass!= 8:
@@ -243,21 +285,21 @@ while longPass != 6 and longPass!= 8:
 
 
     if longPass == 6:
-        modoVendedor=0
-        while modoVendedor != 4:
+        
+        while True:
             modoVendedor= menuVendedores()
 
             if modoVendedor == 1:
                 menu_ventas()
-         #   elif modoVendedor ==2:
-
+            elif modoVendedor ==2:
+                menu_buscar_productos()   
            # elif modoVendedor ==3:
                 
-         #   elif modoVendedor ==4:
-
-          #  else:
-               # print("elige una opcion entre el 1 y el 4")
-                #input()
+            elif modoVendedor == 4:
+                break
+            else:
+                print("elige una opcion entre el 1 y el 4")
+                input()
     elif longPass == 8:
         
         while True:
@@ -272,7 +314,7 @@ while longPass != 6 and longPass!= 8:
                     elif opcion_admin==2:
                         menuModificarUsuario()
                     elif opcion_admin==3:
-                        eliminarUsuario()
+                        menuEliminarUsuario()
                     elif opcion_admin==4:
                         break
                     else : 
