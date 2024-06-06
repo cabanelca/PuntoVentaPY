@@ -32,15 +32,17 @@ def sobrescribir_archivo(contenido, nombre_archivo):
     archivo.close()
 
 def agregar_archivo(contenido, nombre_archivo):
-    contenido_anterior=leer_archivo(nombre_archivo)
-    
-    if len(contenido_anterior)>0:
-        contenido= "#"+ contenido
-    archivo=open(nombre_archivo,"a")
+    if os.path.isfile(nombre_archivo):
+        contenido_anterior=leer_archivo(nombre_archivo)
+        
+        if len(contenido_anterior)>0:
+            contenido= "#"+ contenido
+        archivo=open(nombre_archivo,"a")
 
-    archivo.write(contenido)
-    archivo.close()
-
+        archivo.write(contenido)
+        archivo.close()
+    else:
+        sobrescribir_archivo(contenido, nombre_archivo)
 def leer_archivo(nombre):
     archivo= open(nombre, "r")
     contenido = archivo.read()
@@ -96,7 +98,7 @@ def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, c
     print ("1- MODIFICAR PRODUCTO")
     #print ("2- MODIFICAR PRECIO ")
     print ("2- AGREGAR PRODUCTO")
-
+    print ("3- ELIMINAR PRODUCTO")
     opcionModificarStock= input(" ELIJA UNA OPCION VALIDA: ")
 
 def agregarUsuario():
@@ -110,14 +112,51 @@ def agregarUsuario():
     agregar_archivo(usuario, "usuario.txt")
     agregar_archivo(contrasena_cifrada, "password.txt")
    
-def modificarUsuario():
+def menuModificarUsuario():
     borrarPantalla()
-    print( "INGRESE EL USUARIO QUE DESEA MODIFICAR: ")
+    print ("ESTAS POR MODIFICAR UN USUARIO")
+    usuario= input( "INGRESE EL USUARIO QUE DESEA MODIFICAR: ")
+    password=generador_contrasena(6)
+    contrasena_cifrada=cifrado(password)
+    nuevo_usuario=input(" INGRESE NUEVO USUARIO: ")
+    resultado=modificarUsuario(usuario,nuevo_usuario,contrasena_cifrada)
+    if resultado==True:
+        print ("TU NUEVO USUARIO ES: " + nuevo_usuario)
+        print ("TU CONTRASENA ES : " + password)
+    else:
+        print("EL USUARIO NO FUE ENCONTRADO")
+def modificarUsuario(usuario_viejo, usuario_nuevo, password):
+    usuario_txt=leer_archivo("usuario.txt")
+    password_txt=leer_archivo("password.txt")
+    lista_usuario= usuario_txt.split("#")
+    lista_password=password_txt.split("#")
+    i=0
+    #while len(lista_usuario) >i and lista_usuario[i]!= usuario_viejo:
+     #   i = i +1
+    for us_existente in lista_usuario:
+        if us_existente==usuario_viejo:
+            lista_usuario[i]=usuario_nuevo
+            lista_password[i]=password
+            usuario_txt=("#").join(lista_usuario)
+            password_txt=("#").join(lista_password)
+            sobrescribir_archivo(usuario_txt, "usuario.txt")
+            sobrescribir_archivo(password_txt, "password.txt")
+            return True
+        else:
+            i=i+1
 
-
+    return False
+   
+      
+    
 def eliminarUsuario():
     borrarPantalla()
-    print (" ELIJA EL USUARIO A ELIMINAR: ")
+    usuario=print(input (" ELIJA EL USUARIO A ELIMINAR: "))
+    password= inhabilitada
+    sobrescribir_archivo(usuario, "usuario.txt")
+    sobrescribir_archivo(password, "password.txt")
+    print ("EL SIGUIENTE USUARIO ESTA INHABILITADO")
+    
 def modificar_articulo():
     borrarPantalla()
     print("ELIJA EL ARTICULO A MODIFICAR: ")
@@ -130,7 +169,7 @@ def menu_ventas():
     while True:
         borrarPantalla()
         print("VENTAS DE PRODUCTOS")
-        pro_vendido= input("INGRESE EL PRODUCTO A AGREGAR: ")
+        pro_vendido= input("INGRESE EL PRODUCTO A VENDER: ")
         cantidad=input("INGRESE LA CANTIDAD QUE VA A COMPRAR: ")
         registro_venta= registrar_ventas(productos,pro_vendido,cantidad)
         productos=registro_venta[0]
@@ -204,7 +243,7 @@ while longPass != 6 and longPass!= 8:
                     if opcion_admin==1:
                         agregarUsuario()
                     elif opcion_admin==2:
-                        modificarUsuario()
+                        menuModificarUsuario()
                     elif opcion_admin==3:
                         eliminarUsuario()
                     else : 
