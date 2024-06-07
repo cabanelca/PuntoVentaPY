@@ -146,7 +146,11 @@ def agregarUsuario():
     borrarPantalla()
     print  ("AGREGAR NUEVO USUARIO") 
     usuario= input("NOMBRE DEL NUEVO USUARIO: ")
-    password=generador_contrasena(6)
+    respuesta=input("¿TU USUARIO ES ADMIN? ")
+    long=6
+    if respuesta=="si":
+        long=8
+    password=generador_contrasena(long)
     print ("EL NUEVO USUARIO ES: " + usuario)
     input()
     print ("SU CONTRASEÑA ES: " + password)
@@ -159,7 +163,11 @@ def menuModificarUsuario():
     borrarPantalla()
     print ("ESTAS POR MODIFICAR UN USUARIO")
     usuario= input( "INGRESE EL USUARIO QUE DESEA MODIFICAR: ")
-    password=generador_contrasena(6)
+    respuesta=input("¿TU USUARIO ES ADMIN? ")
+    long=6
+    if respuesta=="si":
+        long=8
+    password=generador_contrasena(long)
     contrasena_cifrada=cifrado(password)
     nuevo_usuario=input(" INGRESE NUEVO USUARIO: ")
     resultado=modificarUsuario(usuario,nuevo_usuario,contrasena_cifrada)
