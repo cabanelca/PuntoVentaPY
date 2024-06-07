@@ -94,7 +94,7 @@ def menuAdministrador():# nos muestra el menu de administrador
     print ("MODO ADMINISTRADOR")
     print ("\n")
     print ("1- ADMINISTRAR USUARIOS")
-    print ("2- ADMINISTRAR VENDEDOR")
+    print ("2- ADMINISTRAR STOCK")
     print ("3- SALIR DEL PROGRAMA")
     opcionAdministrador = input("ELIGE UNA OPCION VALIDA: ")
     return (int(opcionAdministrador))
@@ -104,10 +104,10 @@ def menuVendedores():# nos muestra el menu de los vendedores
     print ("ELIJA UNA OPCIÓN DEL MENU ")
     print ("1-  VENDER ")
     print ("2- BUSCAR PRODUCTO")
-    
     print ("3-  SALIR ")
     opcionVendedor = input("ELIJA UNA OPCION VALIDA: ")
     return (int(opcionVendedor))
+
 def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
     borrarPantalla()
     print ("1- AGREGAR USUARIO ")
@@ -124,6 +124,7 @@ def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, c
     #print ("2- MODIFICAR PRECIO ")
     print ("2- MODIFICAR PRODUCTO")
     print ("3- ELIMINAR PRODUCTO")
+    print ("4- VOLVER A LA PANTALLA ANTERIOR")
    
     while True:
          opcionModificarStock= int(input(" ELIJA UNA OPCION VALIDA: "))
@@ -139,8 +140,11 @@ def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, c
                 eliminar_producto(producto)
                 
                 input()
+         elif opcionModificarStock==4:
+                break
          else:
-                break    
+                print("ELIGE UNA OPCION ENTRE EL 1 Y EL 4")
+                input()
 
 def agregarUsuario():
     borrarPantalla()
@@ -221,12 +225,7 @@ def eliminarUsuario(usuario):
             i=i+1
     return False
     
-def modificar_articulo():
-    borrarPantalla()
-    print("ELIJA EL ARTICULO A MODIFICAR: ")
-def agregar_articulo():
-    borrarPantalla()
-    print("INGRESE EL ARTICULO A AGREGAR: ")
+
 def menu_ventas():
     productos=leer_archivo("productos.txt")
     totalventa=0
@@ -295,10 +294,7 @@ def buscar_producto(producto):
         print("TU PRODUCTO NO ESTA EN NUESTRO LOCAL")
         input()
 
-def menu_modificar_productos():
-    borrarPantalla()
-    producto_buscado=input("INGRESE EL PRODUCTO QUE BUSCAS: ")
-    producto=modificar_producto(producto_buscado)
+
 def modificar_producto(producto):
     productos_txt=leer_archivo("productos.txt")
     lista_productos=productos_txt.split("#")
