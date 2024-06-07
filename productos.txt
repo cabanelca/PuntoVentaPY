@@ -1,1 +1,1 @@
-1,galleta,2000,10#2,cocacola2l,1500,20#3,pepsi2l,1300,0#4,fanta2l,1500,61#5,lavandina,600,25#6,teclado,12000,10#7,leche,1300,50
+1,galleta,2000,10#2,cocacola2l,1500,20#3,pepsi2l,1300,25#4,fanta2l,1500,61#5,lavandina,600,25#6,teclado,12000,10#7,leche,1300,50

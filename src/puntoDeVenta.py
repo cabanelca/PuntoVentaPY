@@ -235,6 +235,14 @@ def eliminarUsuario(usuario):
         else:
             i=i+1
     return False
+def generar_usuario_admin1():
+    if not os.path.isfile("usuario.txt"):
+       crear_archivo("usuario.txt")
+       sobrescribir_archivo("admin","usuario.txt")
+       crear_archivo("password.txt")
+       clave="abcdefgh"
+       clave_cifrado= cifrado(clave)
+       sobrescribir_archivo(clave_cifrado,"password.txt")
     
 
 def menu_ventas():
@@ -401,6 +409,7 @@ def grafico_stock():
     
 
 #codigo principal (main)
+generar_usuario_admin1()
 longPass=0
 while longPass != 6 and longPass!= 8:
     longPass= menuLogin()
