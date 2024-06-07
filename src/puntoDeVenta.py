@@ -58,7 +58,6 @@ def agregar_archivo(contenido, nombre_archivo):
         if len(contenido_anterior)>0:
             contenido= "#"+ contenido
         archivo=open(nombre_archivo,"a")
-
         archivo.write(contenido)
         archivo.close()
     else:
@@ -81,7 +80,6 @@ def menuLogin():# nos muestra el login
     print("PUNTO DE VENTA")
     print("\n")
     usuario=  input("USUARIO: ")
-
     password= input("CONTRASEÑA: ")
     valor=validacion_login(usuario, password)
     if valor == True:
@@ -114,37 +112,35 @@ def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
     print ("2- MODIFICAR USUARIO ")
     print ("3- ELIMINAR USUARIO ")
     print ("4- QUIERES VOLVER AL MENU ANTERIOR ")
-
     opcionAMEUsuario = input("ELIJA UNA OPCION VALIDA: ")
     return (int(opcionAMEUsuario))
 
 def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, consultarlo y agregar un articulo
-    borrarPantalla()
-    print ("1- AGREGAR PRODUCTO")
-    #print ("2- MODIFICAR PRECIO ")
-    print ("2- MODIFICAR PRODUCTO")
-    print ("3- ELIMINAR PRODUCTO")
-    print ("4- VOLVER A LA PANTALLA ANTERIOR")
-   
+    
     while True:
-         opcionModificarStock= int(input(" ELIJA UNA OPCION VALIDA: "))
-         if opcionModificarStock==1:
-                print ("elegiste el 1")
-                input()
-         elif opcionModificarStock==2:
-                producto=input("INGRESE EL PRODUCTO A MODIFICAR: ")
-                modificar_producto(producto)
-                input()
-         elif opcionModificarStock==3:
-                producto=input("INGRESE EL PRODUCTO A ELIMINAR DE TU STOCK: ")
-                eliminar_producto(producto)
+        borrarPantalla()
+        print ("1- AGREGAR PRODUCTO")
+        #print ("2- MODIFICAR PRECIO ")
+        print ("2- MODIFICAR PRODUCTO")
+        print ("3- ELIMINAR PRODUCTO")
+        print ("4- VOLVER A LA PANTALLA ANTERIOR")
+        opcionModificarStock= int(input(" ELIJA UNA OPCION VALIDA: "))
+        if opcionModificarStock==1:
+            menu_agregar_producto()
                 
-                input()
-         elif opcionModificarStock==4:
-                break
-         else:
-                print("ELIGE UNA OPCION ENTRE EL 1 Y EL 4")
-                input()
+        elif opcionModificarStock==2:
+            producto=input("INGRESE EL PRODUCTO A MODIFICAR: ")
+            modificar_producto(producto)
+            input()
+        elif opcionModificarStock==3:
+            producto=input("INGRESE EL PRODUCTO A ELIMINAR DE TU STOCK: ")
+            eliminar_producto(producto)            
+            input()
+        elif opcionModificarStock==4:
+            break
+        else:
+            print("ELIGE UNA OPCION ENTRE EL 1 Y EL 4")
+            input()
 
 def agregarUsuario():
     borrarPantalla()
@@ -271,7 +267,7 @@ def registrar_ventas(productos,pro_vendido,cantidad):
 def menu_buscar_productos():
     borrarPantalla()
     producto_buscado=input("INGRESE EL PRODUCTO QUE BUSCAS: ")
-    producto=buscar_producto(producto_buscado)
+    buscar_producto(producto_buscado)
    
 
 def buscar_producto(producto):
@@ -293,13 +289,34 @@ def buscar_producto(producto):
     if pos==len(lista_productos):
         print("TU PRODUCTO NO ESTA EN NUESTRO LOCAL")
         input()
+def menu_agregar_producto():
+    borrarPantalla()
+    print("VAS A AGREGAR UN PRODUCTO ")
+    producto=input("PRODUCTO A AGREGAR: ")
+    precio=input("PRECIO A AGREGAR: ")
+    cantidad=input("CUAL ES LA CANTIDAD DE TU STOCK: ")
+    agregar_producto(producto,precio,cantidad)
+    print("TU PRODUCTO FUE AGREGADO EN FORMA CORRECTA")
+    input()
+    
+def agregar_producto(producto, precio, cantidad):
+    contenido_anterior=""
+    nuevo_id="1"
+    if os.path.isfile("productos.txt"):
+        contenido_anterior=leer_archivo("productos.txt")
+        lista_producto=contenido_anterior.split("#")
+        nuevo_id=len(lista_producto)+1
+        contenido_anterior=contenido_anterior+"#"
+    nuevo_prod=f"{nuevo_id},{producto},{precio},{cantidad}"
+    contenido_nuevo=f"{contenido_anterior}{nuevo_prod}"
+    sobrescribir_archivo(contenido_nuevo, "productos.txt")
 
-
+        
+    
 def modificar_producto(producto):
     productos_txt=leer_archivo("productos.txt")
     lista_productos=productos_txt.split("#")
     pos =0
-   
     producto_nuevo=input("INGRESA TU PRODUCTO: ")
     precio_nuevo=input("INGRESA EL PRECIO: ")
     stock_nuevo=input("INGRESA TU STOCK: ")
@@ -316,7 +333,7 @@ def modificar_producto(producto):
     productos_txt="#".join(lista_productos)
     sobrescribir_archivo(productos_txt, "productos.txt")
     if pos==len(lista_productos):
-        print("TU PRODUCTO NO SE ENCUENTRA EN STOCK")
+       print("TU PRODUCTO NO SE ENCUENTRA EN STOCK ")
     else:
         print("TU PRODUCTO SE MODIFICO CON EXITO")
 def eliminar_producto(producto):
@@ -342,31 +359,22 @@ def eliminar_producto(producto):
 longPass=0
 while longPass != 6 and longPass!= 8:
     longPass= menuLogin()
-
-
     if longPass == 6:
-        
         while True:
             modoVendedor= menuVendedores()
-
             if modoVendedor == 1:
                 menu_ventas()
             elif modoVendedor ==2:
-                menu_buscar_productos()   
-           
-                
+                menu_buscar_productos()     
             elif modoVendedor == 3:
                 break
             else:
-                print("elige una opcion entre el 1 y el 3")
+                print("ELIGE UN VALOR DEL 1 AL 3")
                 input()
-    elif longPass == 8:
-        
+    elif longPass == 8:   
         while True:
-
             modoAdmin=menuAdministrador()
-            if modoAdmin == 1:
-                
+            if modoAdmin == 1:               
                 while True:
                     opcion_admin=menuAMEUsuarios()
                     if opcion_admin==1:
@@ -380,7 +388,6 @@ while longPass != 6 and longPass!= 8:
                     else : 
                        print( "INGRESE UN VALOR CORRECTO")
                        input()
-
             elif modoAdmin == 2:
                 menuModificarStock()
             elif modoAdmin ==3:
@@ -388,8 +395,6 @@ while longPass != 6 and longPass!= 8:
             else:
                 print ("QUIERES MODIFICAR USUARIO ELIGE 1 Y SI QUIERES MODIFICAR STOCK ELIGE 2")
                 input()       
-             
-        
     else :
         print (" ACCESO DENEGADO")
         input ()
