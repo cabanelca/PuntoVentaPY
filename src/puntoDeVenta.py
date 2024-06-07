@@ -120,9 +120,9 @@ def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
 
 def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, consultarlo y agregar un articulo
     borrarPantalla()
-    print ("1- MODIFICAR PRODUCTO")
+    print ("1- AGREGAR PRODUCTO")
     #print ("2- MODIFICAR PRECIO ")
-    print ("2- AGREGAR PRODUCTO")
+    print ("2- MODIFICAR PRODUCTO")
     print ("3- ELIMINAR PRODUCTO")
    
     while True:
@@ -131,12 +131,13 @@ def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, c
                 print ("elegiste el 1")
                 input()
          elif opcionModificarStock==2:
-                print ("elegiste el 1")
+                producto=input("INGRESE EL PRODUCTO A MODIFICAR: ")
+                modificar_producto(producto)
                 input()
          elif opcionModificarStock==3:
                 producto=input("INGRESE EL PRODUCTO A ELIMINAR DE TU STOCK: ")
                 eliminar_producto(producto)
-                print("ELMINASTE CON EXITO TU PRODUCTO")
+                
                 input()
          else:
                 break    
@@ -294,6 +295,31 @@ def buscar_producto(producto):
         print("TU PRODUCTO NO ESTA EN NUESTRO LOCAL")
         input()
 
+def menu_modificar_productos():
+    borrarPantalla()
+    producto_buscado=input("INGRESE EL PRODUCTO QUE BUSCAS: ")
+    producto=modificar_producto(producto_buscado)
+def modificar_producto(producto):
+    productos_txt=leer_archivo("productos.txt")
+    lista_productos=productos_txt.split("#")
+    pos =0
+   
+    producto_nuevo=input("INGRESA TU PRODUCTO: ")
+    precio_nuevo=input("INGRESA EL PRECIO: ")
+    stock_nuevo=input("INGRESA TU STOCK: ")
+    for prod in lista_productos:
+        registro_producto=prod.split("#")
+        if producto == registro_producto[1]:
+            registro_producto[1]=producto_nuevo
+            registro_producto[2]=precio_nuevo
+            registro_producto[3]=stock_nuevo
+            prod=",".join(registro_producto)
+            lista_productos[pos]=prod
+        else:
+            pos=pos+1
+    productos_txt="#".join(lista_productos)
+    sobrescribir_archivo(productos_txt, "productos.txt")
+
 def eliminar_producto(producto):
     productos_txt=leer_archivo("productos.txt")
     lista_productos=productos_txt.split("#")
@@ -308,8 +334,10 @@ def eliminar_producto(producto):
             pos= pos +1
     productos_txt="#".join(lista_productos)
     sobrescribir_archivo(productos_txt, "productos.txt")
-
-
+    if pos==len(lista_productos):
+        print("TU PRODUCTO NO SE ENCUENTRA EN STOCK")
+    else:
+        print("TU PRODUCTO SE ELIMINO CON EXITO")
 
 #codigo principal (main)
 longPass=0
