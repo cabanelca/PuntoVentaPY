@@ -104,8 +104,8 @@ def menuVendedores():# nos muestra el menu de los vendedores
     print ("ELIJA UNA OPCIÓN DEL MENU ")
     print ("1-  VENDER ")
     print ("2- BUSCAR PRODUCTO")
-    print ("3- LISTA DE PRODUCTOS EN FALTA")
-    print ("4-  SALIR ")
+    
+    print ("3-  SALIR ")
     opcionVendedor = input("ELIJA UNA OPCION VALIDA: ")
     return (int(opcionVendedor))
 def menuAMEUsuarios(): # nos muestra el menu donde modificar los usuarios
@@ -124,7 +124,22 @@ def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, c
     #print ("2- MODIFICAR PRECIO ")
     print ("2- AGREGAR PRODUCTO")
     print ("3- ELIMINAR PRODUCTO")
-    opcionModificarStock= input(" ELIJA UNA OPCION VALIDA: ")
+   
+    while True:
+         opcionModificarStock= int(input(" ELIJA UNA OPCION VALIDA: "))
+         if opcionModificarStock==1:
+                print ("elegiste el 1")
+                input()
+         elif opcionModificarStock==2:
+                print ("elegiste el 1")
+                input()
+         elif opcionModificarStock==3:
+                producto=input("INGRESE EL PRODUCTO A ELIMINAR DE TU STOCK: ")
+                eliminar_producto(producto)
+                print("ELMINASTE CON EXITO TU PRODUCTO")
+                input()
+         else:
+                break    
 
 def agregarUsuario():
     borrarPantalla()
@@ -278,6 +293,24 @@ def buscar_producto(producto):
     if pos==len(lista_productos):
         print("TU PRODUCTO NO ESTA EN NUESTRO LOCAL")
         input()
+
+def eliminar_producto(producto):
+    productos_txt=leer_archivo("productos.txt")
+    lista_productos=productos_txt.split("#")
+    pos=0
+    for prod in lista_productos:
+        registro_producto=prod.split(",")
+        if producto == registro_producto[1]:
+            registro_producto[3]="0"
+            prod= ",".join(registro_producto)
+            lista_productos[pos]=prod
+        else:
+            pos= pos +1
+    productos_txt="#".join(lista_productos)
+    sobrescribir_archivo(productos_txt, "productos.txt")
+
+
+
 #codigo principal (main)
 longPass=0
 while longPass != 6 and longPass!= 8:
@@ -293,12 +326,12 @@ while longPass != 6 and longPass!= 8:
                 menu_ventas()
             elif modoVendedor ==2:
                 menu_buscar_productos()   
-           # elif modoVendedor ==3:
+           
                 
-            elif modoVendedor == 4:
+            elif modoVendedor == 3:
                 break
             else:
-                print("elige una opcion entre el 1 y el 4")
+                print("elige una opcion entre el 1 y el 3")
                 input()
     elif longPass == 8:
         
