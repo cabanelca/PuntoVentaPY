@@ -1,5 +1,6 @@
 import os
 import random
+import matplotlib.pyplot as plt  
 from io import open
 
 def validacion_login(usuario, clave):
@@ -100,9 +101,9 @@ def menuAdministrador():# nos muestra el menu de administrador
 def menuVendedores():# nos muestra el menu de los vendedores
     borrarPantalla()
     print ("ELIJA UNA OPCIÓN DEL MENU ")
-    print ("1-  VENDER ")
+    print ("1- VENDER ")
     print ("2- BUSCAR PRODUCTO")
-    print ("3-  SALIR ")
+    print ("3- SALIR")
     opcionVendedor = input("ELIJA UNA OPCION VALIDA: ")
     return (int(opcionVendedor))
 
@@ -123,7 +124,8 @@ def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, c
         #print ("2- MODIFICAR PRECIO ")
         print ("2- MODIFICAR PRODUCTO")
         print ("3- ELIMINAR PRODUCTO")
-        print ("4- VOLVER A LA PANTALLA ANTERIOR")
+        print ("4- GRAFICAR STOCK ")
+        print ("5- VOLVER A LA PANTALLA ANTERIOR")
         opcionModificarStock= int(input(" ELIJA UNA OPCION VALIDA: "))
         if opcionModificarStock==1:
             menu_agregar_producto()
@@ -137,6 +139,11 @@ def menuModificarStock(): #nos muestra el menu donde poder modificar el Stock, c
             eliminar_producto(producto)            
             input()
         elif opcionModificarStock==4:
+            grafico_stock()
+            #print("LLAMA GRAFICA")
+            input()
+
+        elif opcionModificarStock==5:
             break
         else:
             print("ELIGE UNA OPCION ENTRE EL 1 Y EL 4")
@@ -363,6 +370,35 @@ def eliminar_producto(producto):
         print("TU PRODUCTO NO SE ENCUENTRA EN STOCK")
     else:
         print("TU PRODUCTO SE ELIMINO CON EXITO")
+
+def grafico(listaY, listaX, cantidadLimite, titulo, detalleX, detalleY):
+    valorNSGF=[min(valor,cantidadLimite) for valor in listaY]
+    valorSSGF=[max(0,valor-cantidadLimite)for valor in listaY]
+    plt.bar(listaX,valorNSGF,color="grey",label="stock en falta")
+    plt.bar(listaX,valorSSGF,bottom=valorNSGF,color= "blue", label="stock ok")
+    plt.axhline(y=cantidadLimite,color="red",linestyle="--", label=f"limite({cantidadLimite})")
+    plt.title(titulo)
+    plt.xlabel(detalleX)
+    plt.ylabel(detalleY)
+    plt.show()
+
+def grafico_stock():
+    producto_txt=leer_archivo("productos.txt")
+    lista_producto=producto_txt.split("#")
+    lista_prod_nombre=[]
+    lista_prod_cantidad=[]
+    for prod in lista_producto:
+        lista_detalle=prod.split(",")
+        prod_nombre=lista_detalle[1]
+        prod_cantidad=lista_detalle[3]
+        lista_prod_cantidad.append(int(prod_cantidad))
+        lista_prod_nombre.append(prod_nombre)
+    cantidadLimite=5
+    titulo="PRODUCTO STOCK"
+    detalleX="PRODUCTOS"
+    detalleY="CANTIDAD DE PRODUCTOS"
+    grafico(lista_prod_cantidad,lista_prod_nombre,cantidadLimite,titulo,detalleX,detalleY)
+    
 
 #codigo principal (main)
 longPass=0
