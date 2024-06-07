@@ -308,7 +308,7 @@ def modificar_producto(producto):
     precio_nuevo=input("INGRESA EL PRECIO: ")
     stock_nuevo=input("INGRESA TU STOCK: ")
     for prod in lista_productos:
-        registro_producto=prod.split("#")
+        registro_producto=prod.split(",")
         if producto == registro_producto[1]:
             registro_producto[1]=producto_nuevo
             registro_producto[2]=precio_nuevo
@@ -319,7 +319,10 @@ def modificar_producto(producto):
             pos=pos+1
     productos_txt="#".join(lista_productos)
     sobrescribir_archivo(productos_txt, "productos.txt")
-
+    if pos==len(lista_productos):
+        print("TU PRODUCTO NO SE ENCUENTRA EN STOCK")
+    else:
+        print("TU PRODUCTO SE MODIFICO CON EXITO")
 def eliminar_producto(producto):
     productos_txt=leer_archivo("productos.txt")
     lista_productos=productos_txt.split("#")
