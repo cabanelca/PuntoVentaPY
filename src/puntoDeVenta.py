@@ -248,7 +248,7 @@ def menu_ventas():
     sobrescribir_archivo(productos,"productos.txt")
     print(" TU SALDO A PAGAR ES= "+ str(totalventa))
     input()
-   
+    #return totalventa
 def registrar_ventas(productos,pro_vendido,cantidad):
     subtotal=0
     pos=0
@@ -319,7 +319,8 @@ def agregar_producto(producto, precio, cantidad):
     contenido_nuevo=f"{contenido_anterior}{nuevo_prod}"
     sobrescribir_archivo(contenido_nuevo, "productos.txt")
 
-        
+
+
     
 def modificar_producto(producto):
     productos_txt=leer_archivo("productos.txt")
@@ -371,7 +372,8 @@ while longPass != 6 and longPass!= 8:
         while True:
             modoVendedor= menuVendedores()
             if modoVendedor == 1:
-                menu_ventas()
+               menu_ventas()
+               
             elif modoVendedor ==2:
                 menu_buscar_productos()     
             elif modoVendedor == 3:
